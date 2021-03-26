@@ -18,9 +18,9 @@ var model = {
     numShips: 3,
     shipLength: 3,
     shipsSunk: 0,
-    ships: [{ positions: ["06", "16", "26"], hits: ["", "", ""] }, 
-            { positions: ["24", "34", "44"], hits: ["", "", ""] },
-            { positions: ["10", "11", "12"], hits: ["", "", ""] }],
+    ships: [{ positions: ["", "", ""], hits: ["", "", ""] }, 
+            { positions: ["", "", ""], hits: ["", "", ""] },
+            { positions: ["", "", ""], hits: ["", "", ""] }],
     fire: function(guess) {
         for (var i = 0; i < this.numShips; i++) {
             var ship = this.ships[i];
@@ -53,6 +53,47 @@ var model = {
             }
         }
         return true;
+    },
+    generateShipPositions: function() {
+        var positions;
+        for (var i = 0; i < this.numShips; i++) {
+            do {
+                positions = this.generateShip();
+            } while (this.collision(positions));
+            this.ships[i].positions = positions;
+        } 
+    },
+    generateShip: function() {
+        var direction = Math.floor(Math.random() * 2);
+        var row, col;
+        if (direction === 1) {
+            row = Math.floor(Math.random() * this.boardSize);
+            col = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
+        } else {
+            col = Math.floor(Math.random() * this.boardSize);
+            row = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
+        }
+
+        var newShipPositions = [];
+        for (var i = 0; i < this.shipLength; i++) {
+            if (direction === 1) {
+                newShipPositions.push(row + "" + (col + i));
+            } else {
+                newShipPositions.push((row + i) + "" + col);
+            }
+        }
+        return newShipPositions;
+    },
+    collision: function(positions) {
+        for (var i = 0; i < this.numShips; i++) {
+            var ship = this.ships[i];
+            for (var j = 0; j < positions.length; j++) {
+                if (ship.positions.indexOf(positions[j]) >= 0) {
+                    return true;
+                }
+            }
+        }
+        return false;   
     }
 };
 
@@ -92,13 +133,29 @@ function parseGuess(guess) {
     return null;
 }
 
-controller.processGuess("a6");
-controller.processGuess("b6");
-controller.processGuess("C6");
-controller.processGuess("C4");
-controller.processGuess("D4");
-controller.processGuess("E4");
-controller.processGuess("B0");
-controller.processGuess("B1");
-controller.processGuess("B2");
+function init() {
+    var fireButton = document.getElementById("fireButton");
+    fireButton.onclick = handleFireButton;
+    var guessInput = document.getElementById("guessInput");
+    guessInput.onkeypress = handleKeyPress;
+    model.generateShipPositions();
+}
+
+function handleFireButton() {
+    var guessInput = document.getElementById("guessInput");
+    var guess = guessInput.value;
+    controller.processGuess(guess);
+    guessInput.value = "";
+}
+
+function handleKeyPress(e) {
+    var fireButton = document.getElementById("fireButton");
+    if (e.keyCode === 13) {
+        fireButton.click();
+        return false;
+    }
+}
+
+window.onload = init;
+
 
