@@ -31,7 +31,7 @@ var model = {
                     view.displayHit(guess);
                     view.displayMessage("HIT!");
                     if (this.isSunk(ship)) {
-                        view.displayMessage("YOU SANK MY BATTLESHIP!");
+                        view.displayMessage("CÁI ĐJT CMN ẢO THẬT ĐẤY!");
                         this.shipsSunk++;
                     }
                     return true;
