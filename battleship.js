@@ -18,13 +18,13 @@ var model = {
     numShips: 3,
     shipLength: 3,
     shipsSunk: 0,
-    ships: [{ locations: ["06", "16", "26"], hits: ["", "", ""] }, 
-            { locations: ["24", "34", "44"], hits: ["", "", ""] },
-            { locations: ["10", "11", "12"], hits: ["", "", ""] }],
+    ships: [{ positions: ["06", "16", "26"], hits: ["", "", ""] }, 
+            { positions: ["24", "34", "44"], hits: ["", "", ""] },
+            { positions: ["10", "11", "12"], hits: ["", "", ""] }],
     fire: function(guess) {
         for (var i = 0; i < this.numShips; i++) {
             var ship = this.ships[i];
-            var index = ship.locations.indexOf(guess);
+            var index = ship.positions.indexOf(guess);
             if (index >= 0) {
                 if (ship.hits[index] != "hit") {
                     ship.hits[index] = "hit";
@@ -94,11 +94,11 @@ function parseGuess(guess) {
 
 controller.processGuess("a6");
 controller.processGuess("b6");
-// controller.processGuess("C6");
-// controller.processGuess("C4");
-// controller.processGuess("D4");
-// controller.processGuess("E4");
-// controller.processGuess("B0");
-// controller.processGuess("B1");
-// controller.processGuess("B2");
+controller.processGuess("C6");
+controller.processGuess("C4");
+controller.processGuess("D4");
+controller.processGuess("E4");
+controller.processGuess("B0");
+controller.processGuess("B1");
+controller.processGuess("B2");
 
