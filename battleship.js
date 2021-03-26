@@ -60,10 +60,10 @@ var controller = {
     guesses: 0,
 
     processGuess: function(guess) {
-        position = parseGuess(guess);
-        if (position) {
+        myLocation = parseGuess(guess);
+        if (myLocation) {
             this.guesses++;
-            var hit = model.fire(position);
+            var hit = model.fire(myLocation);
             if (hit && model.shipsSunk === model.numShips) {
                 view.displayMessage("You sank all my battleships, in " + this.guesses + " guesses.");
             }
