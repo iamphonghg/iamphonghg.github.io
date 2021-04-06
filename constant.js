@@ -1,0 +1,6 @@
+const GAME_WIDTH = 280;
+const GAME_HEIGHT = 480;
+const BULLET_BALL_START_X = 140;
+const BULLET_BALL_START_Y = 460;
+const BALL_RADIUS = 20;
+const BALL_DIAMETER = 40;
